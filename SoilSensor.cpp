@@ -33,6 +33,9 @@ void SoilSensor::readSoil()
   digitalWrite(_powerPin, HIGH);
   delay(10);
   _lastValue = analogRead(_digitalInputPin);
+  Serial.print(_name);
+  Serial.print(": ");
+  Serial.println(_lastValue);
   digitalWrite(_powerPin, LOW);
 }
 
@@ -52,6 +55,9 @@ void SoilSensor::setLED()
     digitalWrite(_dryPin, LOW);
     digitalWrite(_normalPin, LOW);
     digitalWrite(_wetPin, HIGH);
+  }
+  else {
+    Serial.print("fucking fail");
   }
 };
 
