@@ -33,15 +33,15 @@ int h3Ocean = 8;
 // h2 Value
 int h3Value = 0;
 
-SoilSensor s1;
+SoilSensor s1 = SoilSensor("String Of Pearls", dryLow, mediumHigh, mediumLow, h1, h1Power, h1Dry, h1Medium, h1Ocean);
 
 void setup() {
-  s1 = new SoilSensor("String Of Pearls", dryLow, mediumHigh, mediumLow, h1, h1Power, h1Dry, h1Medium, h1Ocean);
+  s1.begin();
   Serial.begin(9600);
 }
 
 void loop() {
-  s1->sense();
+  s1.sense();
 //  s2.sense();
 //  s3.sense();
   delay(1000 * 60 * 60);

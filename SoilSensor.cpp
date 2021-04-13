@@ -12,7 +12,10 @@ SoilSensor::SoilSensor(String name, int dryLow, int mediumHigh, int mediumLow, i
   _normalPin = normalPin;
   _wetPin = wetPin;
   _lastValue = 0;
-  
+}
+
+void SoilSensor::begin()
+{  
   pinMode(_digitalInputPin, INPUT);
   pinMode(_powerPin, OUTPUT);
   pinMode(_dryPin, OUTPUT);
