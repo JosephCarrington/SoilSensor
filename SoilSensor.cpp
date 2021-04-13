@@ -34,8 +34,9 @@ void SoilSensor::readSoil()
   delay(10);
   _lastValue = analogRead(_digitalInputPin);
   Serial.print(_name);
-  Serial.print(": ");
-  Serial.println(_lastValue);
+  Serial.print(":");
+  Serial.print(_lastValue);
+  Serial.print(" ");
   digitalWrite(_powerPin, LOW);
 }
 
@@ -57,7 +58,8 @@ void SoilSensor::setLED()
     digitalWrite(_wetPin, HIGH);
   }
   else {
-    Serial.print("fucking fail");
+//    Serial.print("Hysteresis Happened, or an error, with a value of: ");
+//    Serial.println(_lastValue);
   }
 };
 

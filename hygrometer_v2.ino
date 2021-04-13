@@ -1,10 +1,9 @@
-
-  #include "SoilSensor.h"
+#include <MsTimer2.h>
+#include "SoilSensor.h"
 // Measurements
-int dryHigh = 1023;
-int dryLow = 601;
-int mediumHigh = 600;
-int mediumLow = 51;
+int dryLow = 600;
+int mediumHigh = 550;
+int mediumLow = 200;
 
 // H1 Pins
 int h1 = 23;
@@ -27,21 +26,46 @@ int h3Dry = 9;
 int h3Medium = 10;
 int h3Ocean = 8;
 
-SoilSensor s1("String Of Pearls", dryLow, mediumHigh, mediumLow, h1, h1Power, h1Dry, h1Medium, h1Ocean);
-SoilSensor s2("Basil", dryLow, mediumHigh, mediumLow, h2, h2Power, h2Dry, h2Medium, h2Ocean);
-SoilSensor s3("Succ Bricc", dryLow, mediumHigh, mediumLow, h3, h3Power, h3Dry, h3Medium, h3Ocean);
+// h4 Pins
+int h4 = 14;
+int h4Power = 3;
+int h4Dry = 4;
+int h4Medium = 5;
+int h4Ocean = 6;
 
+// Control Pins
+int senseButtonPin = 7;
+int buttonState = 0;
+
+SoilSensor s1("stringOfPearls", dryLow, mediumHigh, mediumLow, h1, h1Power, h1Dry, h1Medium, h1Ocean);
+SoilSensor s2("basil", dryLow, mediumHigh, mediumLow, h2, h2Power, h2Dry, h2Medium, h2Ocean);
+SoilSensor s3("succBricc", dryLow, mediumHigh, mediumLow, h3, h3Power, h3Dry, h3Medium, h3Ocean);
+SoilSensor s4("theBastard", dryLow, mediumHigh, mediumLow, h4, h4Power, h4Dry, h4Medium, h4Ocean);
 void setup() {
+  pinMode(senseButtonPin, INPUT_PULLUP);
+  
   s1.begin();
   s2.begin();
   s3.begin();
+  s4.begin();
   Serial.begin(9600);
+  senseAll();
+  MsTimer2::set(1000 * 60 * 60, senseAll);
+  MsTimer2::start();
 }
 
 void loop() {
+  buttonState = digitalRead(senseButtonPin);
+  if(buttonState == LOW) {
+    senseAll();
+    delay(1000);
+  }
+}
+
+void senseAll() {
   s1.sense();
   s2.sense();
   s3.sense();
-  delay(1000 * 60 * 60);
-
+  s4.sense();
+  Serial.println();
 }
